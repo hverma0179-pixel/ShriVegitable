@@ -3,8 +3,8 @@ services:
     name: shri-vegetables
     env: node
     rootDir: .
-    buildCommand: npm install && cd client && npm install && npm run build && cd ../server && npm install && cp -r ../client/dist ./dist
-    startCommand: cd server && npm start
+    buildCommand: npm ci && cd client && npm ci && npm run build && cd ../server && npm ci && cp -r ../client/dist ./dist
+    startCommand: cd server && node src/index.js
     envVars:
       - key: JWT_SECRET
         generateValue: true
@@ -12,3 +12,5 @@ services:
         value: admin@shrivegetables.in
       - key: ADMIN_PASSWORD
         sync: false
+      - key: NODE_ENV
+        value: production
