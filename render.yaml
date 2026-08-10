@@ -2,7 +2,8 @@ services:
   - type: web
     name: shri-vegetables
     env: node
-    buildCommand: npm install && cd client && npm install && npm run build && cd ../server && npm install && cp -r ../client/dist ./dist
+    rootDir: .
+    buildCommand: cd client && npm install && npm run build && cd ../server && npm install && cp -r ../client/dist ./dist
     startCommand: cd server && npm start
     envVars:
       - key: JWT_SECRET
