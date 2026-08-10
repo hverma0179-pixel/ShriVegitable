@@ -11,7 +11,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 5000;
 const secret = process.env.JWT_SECRET || 'local-development-secret-change-me';
-const dataDir = path.join(__dirname, '../data');
+const dataDir = path.join(__dirname, 'data');
 const dbFile = path.join(dataDir, 'store.json');
 fs.mkdirSync(dataDir, { recursive: true });
 const read = () => { if (!fs.existsSync(dbFile)) { const d = { products: seedProducts(), orders: [] }; fs.writeFileSync(dbFile, JSON.stringify(d, null, 2)); return d; } return JSON.parse(fs.readFileSync(dbFile, 'utf8')); };
@@ -44,6 +44,7 @@ app.put('/api/products/:id',admin,(req,res)=>{const db=read(); const i=db.produc
 app.delete('/api/products/:id',admin,(req,res)=>{const db=read();db.products=db.products.filter(p=>p.id!=req.params.id);write(db);res.sendStatus(204);});
 app.post('/api/orders',async(req,res)=>{const {customer,items}=req.body; if(!customer?.name||!customer?.phone||!customer?.address||!items?.length)return res.status(400).json({message:'Please complete your delivery details.'}); const db=read(); for(const item of items){const p=db.products.find(x=>x.id===item.id);if(!p||p.stock<item.quantity)return res.status(400).json({message:`${item.name} is no longer available in that quantity.`});p.stock-=item.quantity;}const order={id:`SV${Date.now().toString().slice(-7)}`,customer,items,total:items.reduce((s,x)=>s+x.price*x.quantity,0),status:'Confirmed',createdAt:new Date().toISOString()};db.orders.unshift(order);write(db);let notification={sent:false};try{notification=await notifyOwner(order)}catch(error){console.error('WhatsApp order alert failed:',error.message)}res.status(201).json({...order,notification});});
 app.get('/api/orders',admin,(_,res)=>res.json(read().orders));
-app.use(express.static(path.join(__dirname, '../../client/dist')));
-app.get('*', (_, res) => res.sendFile(path.join(__dirname, '../../client/dist/index.html')));
+const distDir = path.join(__dirname, '../../dist');
+app.use(express.static(distDir));
+app.get('*', (_, res) => res.sendFile(path.join(distDir, 'index.html')));
 app.listen(PORT, '0.0.0.0', ()=>console.log(`Shri Vegetables listening on ${PORT}`));
