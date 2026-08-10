@@ -148,7 +148,7 @@ const Home = () => {
                 transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
               >
                 <Truck size={24} className="badge-icon" />
-                <span>Free Delivery >₹499</span>
+                <span>Free Delivery {'>'}₹499</span>
               </motion.div>
             </div>
           </motion.div>
