@@ -1,8 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight, Heart, ShoppingCart, Minus, Plus, Check, Star, Leaf, Truck, Package, MapPin, Clock, Share2 } from 'lucide-react'
-import { useCartStore } from './stores/cartStore'
-import { useWishlistStore } from './stores/wishlistStore'
-import { formatPrice } from './utils/helpers'
+import { useCartStore, useWishlistStore } from '../stores'
+import { formatPrice } from '../utils/helpers'
 
 const ProductModal = ({ product, isOpen, onClose }) => {
   const { addItem } = useCartStore()
