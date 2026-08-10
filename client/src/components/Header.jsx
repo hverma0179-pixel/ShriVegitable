@@ -1,8 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Menu, X, ShoppingCart, Heart, User, Truck, Leaf, Star, Tag, Package, Clock, MapPin, Phone, Mail } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
-import { useCartStore } from '../context/CartContext'
-import { useWishlistStore } from '../context/WishlistContext'
+import { useCartStore, useWishlistStore } from '../stores'
 import { useState } from 'react'
 
 const Header = () => {
@@ -201,7 +200,7 @@ const Header = () => {
                 <div className="mobile-features">
                   <div className="feature-item">
                     <Truck size={20} />
-                    <span>Free Delivery > ₹499</span>
+                    <span>Free Delivery {'>'} ₹499</span>
                   </div>
                   <div className="feature-item">
                     <Leaf size={20} />

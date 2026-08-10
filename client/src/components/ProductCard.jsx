@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Heart, ShoppingCart, Eye, Tag, Leaf, Star, Truck, Package, Minus, Plus, Check } from 'lucide-react'
-import { useCartStore } from '../context/CartContext'
-import { useWishlistStore } from '../context/WishlistContext'
+import { useCartStore, useWishlistStore } from '../stores'
 import { formatPrice } from '../utils/helpers'
 
 const ProductCard = ({ product, variant = 'default' }) => {
